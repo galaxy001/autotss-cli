@@ -47,28 +47,31 @@ class autotss:
     def save_blobs(self):
         for x in list(self.devices):
             for i in list(self.api[self.devices[x]['identifier']]["firmwares"]):
-                save_path = f"blobs/{self.devices[x]['identifier']}/{self.devices[x]['ecid']}/{i['version']}/{i['buildid']}"
-                os.makedirs(save_path, exist_ok=True)
+                for ty in ['erase', 'update']:
+                    save_path = f"blobs/{self.devices[x]['identifier']}/{self.devices[x]['ecid']}/{i['version']}/{i['buildid']}/{ty}"
+                    os.makedirs(save_path, exist_ok=True)
 
-                if len(glob.glob(f'{save_path}/*.shsh*')) > 0:
-                    print(f"[NOTE] Blobs already saved for [Device: {self.devices[x]['name']}, iOS Version: {i['version']}, buildid {i['buildid']}].")
-                    continue
+                    if len(glob.glob(f'{save_path}/*.shsh*')) > 0:
+                        print(f"[NOTE] Blobs already saved for [Device: {self.devices[x]['name']}, iOS Version: {i['version']}, buildid {i['buildid']}].")
+                        continue
 
-                tsschecker_args = (self.tsschecker,
-                                   '-d', self.devices[x]['identifier'],
-                                   '-e', self.devices[x]['ecid'],
-                                   '--boardconfig', self.devices[x]['boardconfig'],
-                                   '--buildid', i['buildid'],
-                                   '--save-path', save_path,
-                                   '-s')
+                    tsschecker_args = [self.tsschecker,
+                                       '-d', self.devices[x]['identifier'],
+                                       '-e', self.devices[x]['ecid'],
+                                       '--boardconfig', self.devices[x]['boardconfig'],
+                                       '--buildid', i['buildid'],
+                                       '--save-path', save_path,
+                                       '-s']
+                    if ty == 'update':
+                        tsschecker_args.append('-u')
 
-                tsschecker = subprocess.run(tsschecker_args, stdout=subprocess.PIPE, universal_newlines=True)
+                    tsschecker = subprocess.run(tsschecker_args, stdout=subprocess.PIPE, universal_newlines=True)
 
-                if 'Saved shsh blobs!' in tsschecker.stdout:
-                    print(f"Saved SHSH blobs for [Device: {self.devices[x]['name']}, iOS Version: {i['version']}, buildid {i['buildid']}].")
-                else:
-                    print(f"[ERROR] Failed to save SHSH blobs for [Device: {self.devices[x]['name']}, iOS Version: {i['version']}, buildid {i['buildid']}].")
-                    print(tsschecker.stdout)
+                    if 'Saved shsh blobs!' in tsschecker.stdout:
+                        print(f"Saved SHSH blobs for [Device: {self.devices[x]['name']}, iOS Version: {i['version']}, buildid {i['buildid']}], Type {ty}.")
+                    else:
+                        print(f"[ERROR] Failed to save SHSH blobs for [Device: {self.devices[x]['name']}, iOS Version: {i['version']}, buildid {i['buildid']}].")
+                        print(tsschecker.stdout)
 
     def check(self):
         tsschecker = subprocess.run(('which', 'tsschecker'), stdout=subprocess.PIPE, universal_newlines=True)
