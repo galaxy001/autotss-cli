@@ -60,6 +60,7 @@ class autotss:
                                        '-e', self.devices[x]['ecid'],
                                        '--boardconfig', self.devices[x]['boardconfig'],
                                        '--buildid', i['buildid'],
+                                       '-g', '0x1111111111111111',
                                        '--save-path', save_path,
                                        '-s']
                     if ty == 'update':
