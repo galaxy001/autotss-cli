@@ -52,7 +52,7 @@ class autotss:
                     os.makedirs(save_path, exist_ok=True)
 
                     if len(glob.glob(f'{save_path}/*.shsh*')) > 0:
-                        print(f"[NOTE] Blobs already saved for [Device: {self.devices[x]['name']}, iOS Version: {i['version']}, buildid {i['buildid']}].")
+                        print(f"[NOTE] Blobs already saved for [Device: {self.devices[x]['name']}, iOS Version: {i['version']}, buildid {i['buildid']}], Type {ty}.")
                         continue
 
                     tsschecker_args = [self.tsschecker,
@@ -71,7 +71,7 @@ class autotss:
                     if 'Saved shsh blobs!' in tsschecker.stdout:
                         print(f"Saved SHSH blobs for [Device: {self.devices[x]['name']}, iOS Version: {i['version']}, buildid {i['buildid']}], Type {ty}.")
                     else:
-                        print(f"[ERROR] Failed to save SHSH blobs for [Device: {self.devices[x]['name']}, iOS Version: {i['version']}, buildid {i['buildid']}].")
+                        print(f"[ERROR] Failed to save SHSH blobs for [Device: {self.devices[x]['name']}, iOS Version: {i['version']}, buildid {i['buildid']}], Type {ty}.")
                         print(tsschecker.stdout)
 
     def check(self):
