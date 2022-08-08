@@ -75,7 +75,7 @@ class autotss:
                         print(tsschecker.stdout)
 
     def check(self):
-        tsschecker = subprocess.run(('which', 'tsschecker'), stdout=subprocess.PIPE, universal_newlines=True)
+        tsschecker = subprocess.run(('which', 'tsschecker'), stdout=subprocess.PIPE, universal_newlines=True, env={"PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"})
         if tsschecker.returncode == 0:
             path = tsschecker.stdout[:-1]
         else:
