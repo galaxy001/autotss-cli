@@ -81,6 +81,7 @@ WantedBy=multi-user.target
        - Start in: <path to your AutoTSS-CLI folder>
 </details>
 
+
 # Build
 
 ## Fedora Silverblue
@@ -112,9 +113,10 @@ git clone https://github.com/libimobiledevice/libimobiledevice-glue.git
 git clone https://github.com/libimobiledevice/libirecovery.git
 ```
 
-## Forks
 
-###  tihmstar / tsschecker
+# Forks
+
+##  tihmstar / tsschecker
 
 * <https://github.com/DanTheMann15/tsschecker/tree/development>
 * <https://github.com/1Conan/tsschecker>
@@ -125,6 +127,9 @@ git clone https://github.com/libimobiledevice/libirecovery.git
 * <https://github.com/galaxy001/autotss-cli>
 
 See also <https://github.com/airsquared/blobsaver> and <https://github.com/m1stadev/AutoTSS>.
+
+
+# Other
 
 ## Requirements from "beerpiss/autotss-cli"
 * python 3
