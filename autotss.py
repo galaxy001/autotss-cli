@@ -67,6 +67,7 @@ class autotss:
                         tsschecker_args.append('-u')
 
                     tsschecker = subprocess.run(tsschecker_args, stdout=subprocess.PIPE, universal_newlines=True)
+                    print("Running: [{}]".format(tsschecker.args))
 
                     if 'Saved shsh blobs!' in tsschecker.stdout:
                         print(f"Saved SHSH blobs for [Device: {self.devices[x]['name']}, iOS Version: {i['version']}, buildid {i['buildid']}], Type {ty}.")
